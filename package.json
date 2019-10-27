@@ -6,7 +6,7 @@
   "author": "seon <seonu0823@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "webpack-dev-server"
+    "start": "gulp start"
   },
   "dependencies": {
     "react": "^16.10.2",
@@ -25,8 +25,11 @@
     "@types/styled-components": "^4.1.19",
     "babel-plugin-styled-components": "^1.10.6",
     "css-loader": "^3.2.0",
+    "del": "^5.1.0",
     "file-loader": "^4.2.0",
     "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "gulp-typescript": "^5.0.1",
     "gulp-webserver": "^0.9.1",
     "style-loader": "^1.0.0",
     "ts-loader": "^6.2.0",
