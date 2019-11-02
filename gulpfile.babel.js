@@ -17,7 +17,7 @@ const route = {
     build : `${ BUILD }`,
     html : {
         src : `${ PUBLIC }/index.html`,
-        dest : `${ BUILD }/html`
+        dest : `${ BUILD }`
     },
     ts : {
         src : `${ SRC }/index.tsx`,
@@ -25,43 +25,56 @@ const route = {
     }
 };
 
-const webserver = () => gulp.src(route.html.dest, { allowEmpty : true }).pipe(ws({
-    port : 3000,
-    livereload : true,
-    open : true,
-    fallback : `${ route.build }/index.html`,
-}));
+const webserver = () => 
+    gulp.src(route.html.dest, { allowEmpty : true })
+    .pipe(ws({
+        port : 3000,
+        livereload : true,
+        open : true
+    }));
 
 const clean = () => del([`${ route.build }/`]);
 
-const typescript = () => {
-    const tsConfig = ts.createProject('tsconfig.json');
+const getTsConfig = () => ts.createProject('tsconfig.json');
 
-    return gulp
-        .src(route.ts.src, { allowEmpty : true })
-        .pipe(tsConfig())
-        .pipe(babel())
-        .pipe(uglify())
-        .pipe(gulp.dest(route.ts.dest));
-    };
+// const typescript = () => {
+//     const tsConfig = ts.createProject('tsconfig.json');
+
+//     return gulp.src(route.ts.src, { allowEmpty : true })
+//         .pipe(tsConfig())
+//         .pipe(babel())
+//         // .pipe(uglify())
+//         .pipe(gulp.dest(route.ts.dest));
+// };
+
+const typescript = () =>
+    gulp.src(route.ts.src)
+    // .pipe(getTsConfig())
+    .pipe(babel())
+    .pipe(uglify())
+    .pipe(gulp.dest(route.ts.dest));
     
+// const html = () => 
+//     gulp.src(`${ route.html.src }`, { allowEmpty : true })
+//     .pipe(inject(gulp.src(`${ route.ts.dest }`)))
+//     .pipe(htmlmin({ collapseWhitespace : true }))
+//     .pipe(gulp.dest(route.html.dest));
+
 const html = () => 
-gulp.src(route.html.src)
-    .pipe(gulp.dest(route.html.dest));
-    
-    const fileInject = () => 
-    gulp.src(`${ route.html.dest }/index.html`)
-    .pipe(inject(gulp.src(`${ route.ts.dest }/index.js`), { relative : true }))
-    .pipe(htmlmin({ collapseWhitespace : true }))
-    .pipe(gulp.dest(route.build));
+    gulp.src(route.html.src)
+    .pipe(inject(es.merge(typescript())))
+    // .pipe(inject(gulp.src(``), { relative : true }))
+    // .pipe(htmlReplace({ js : { src : route.ts.dest, tpl : '<script type="text/javascript" src="%s"></script>' } }))
+    .pipe(gulp.dest(route.html.dest))
     
 const watch = () => {
     gulp.watch(route.html.src, html);
     gulp.watch(route.ts.src, typescript);
 };
 
-const assest = gulp.series([html, typescript]);
-const live = gulp.series([fileInject, webserver, watch]);
+const assest = gulp.series([typescript]);
+const jsInject = gulp.series([html]);
+const live = gulp.series([webserver, watch]);
 
-export const build = gulp.series([clean, assest]);
+export const build = gulp.series([clean, assest, jsInject]);
 export const start = gulp.series([build, live]);
