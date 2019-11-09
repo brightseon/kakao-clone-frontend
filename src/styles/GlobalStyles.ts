@@ -1,5 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
+import { device } from './size';
 
 export default createGlobalStyle`
     ${ reset };
@@ -17,5 +18,17 @@ export default createGlobalStyle`
     #root {
         width: 100%;
         height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    input,
+    button {
+        outline: none;
     }
 `;
