@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { SetStateAction, SFC, Dispatch } from 'react';
 
-const Auth = () => (
+interface IProps {
+    toggleLoggedIn : Dispatch<SetStateAction<boolean>>;
+};
+
+const Auth : SFC<IProps> = ({ toggleLoggedIn }) => (
     <div>Auth</div>
 );
 

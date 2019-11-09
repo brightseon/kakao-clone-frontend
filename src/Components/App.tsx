@@ -7,7 +7,7 @@ const App = () => {
 
     return (
         <BrowserRouter>
-            <Router isLoggedIn={ isLoggedIn } />
+            <Router isLoggedIn={ isLoggedIn } toggleLoggedIn={ toggleLoggedIn } />
         </BrowserRouter>
     );
 };
