@@ -1,8 +1,9 @@
-import React, { SetStateAction, SFC, Dispatch } from 'react';
-import { Link } from 'react-router-dom';
+import React, { SetStateAction, SFC, Dispatch, KeyboardEvent, KeyboardEventHandler, useState } from 'react';
 import styled from 'styled-components';
 import useInput from '../Hooks/useInput';
-import { LOGGED_OUT_ROUTER } from '../routes';
+import axios from 'axios';
+import { URL } from '../constants';
+import MemberService from '../Components/MemberService';
 
 interface IProps {
     toggleLoggedIn : Dispatch<SetStateAction<boolean>>;
@@ -39,6 +40,12 @@ const Input = styled.input`
     }
 `;
 
+const Error = styled.span`
+    height: 10px;
+    font-size: 11px;
+    color: #E65F3F;
+`;
+
 const LoginButton = styled.button<{ active : boolean }>`
     background-color: ${ props => props.theme.black };
     padding: 16px 122px;
@@ -51,50 +58,59 @@ const LoginButton = styled.button<{ active : boolean }>`
     user-select: none;
 `;
 
-const MemberService = styled.div``;
-
-const Item = styled.span`
-    color: ${ props => props.theme.whiteText };
-    font-size: 12px;
-    user-select: none;
-    cursor: pointer;
-`;
-
-const LinkItme = styled(Link)`
-    color: ${ props => props.theme.whiteText };
-    font-size: 12px;
-    user-select: none;
-    cursor: pointer;
-`;
-
-const Separator = styled.span`
-    color: ${ props => props.theme.whiteText };
-    font-size: 12px;
-    margin: 0 10px;
-    user-select: none;
-`;
-
 const Auth : SFC<IProps> = ({ toggleLoggedIn }) => {
-    let active = false;
-    const email = useInput('');
+    const [error, setError] = useState('');
+    const email = useInput(''); 
     const password = useInput('');
+    
+    const isAcitve = () : boolean => {
+        let active = false;
+        
+        if(email.value.length > 0 && password.value.length > 0) active = true;
 
-    if(email.value.length > 0 && password.value.length > 0) active = true;
+        return active;
+    };
+
+    const resetError = () => {
+        if(error) setError('');
+    }
+
+    const enterLogin : KeyboardEventHandler = (e : KeyboardEvent) => {
+        resetError();
+
+        if(e.keyCode === 13) login();
+    };
+
+    const login = async () => {
+        try {
+            if(!isAcitve()) return;
+
+            const { data : { data }} = await axios.post(`${ URL }/auth/login`, {
+                email : email.value,
+                password : password.value
+            });
+            
+            console.log('data : ', data);
+
+            toggleLoggedIn(true);
+        } catch(err) {
+            console.log('login error : ', err);
+
+            setError('아이디와 비밀번호를 다시 확인해 주세요.');
+        }
+    };
 
     return (
         <Container>
             <LoginForm>
-                <Input type="text" placeholder="이메일" value={ email.value } onChange={ email.onChange } />
-                <Input type="password" placeholder="비밀번호" value={ password.value } onChange={ password.onChange } />
-                <LoginButton type="button" active={ active }>로그인</LoginButton>
+                <Input type="text" placeholder="이메일" value={ email.value } onChange={ email.onChange }
+                    onKeyDown={ resetError } />
+                <Input type="password" placeholder="비밀번호" value={ password.value } onChange={ password.onChange }
+                    onKeyDown={ enterLogin } />
+                <Error>{ error }</Error>
+                <LoginButton type="button" active={ isAcitve() } onClick={ login }>로그인</LoginButton>
            </LoginForm>
-           <MemberService>
-                <LinkItme to={ LOGGED_OUT_ROUTER.join }>회원가입</LinkItme>
-                <Separator>|</Separator>
-                <Item>계정 찾기</Item>
-                <Separator>|</Separator>
-                <Item>비밀번호 찾기</Item>
-           </MemberService>
+           <MemberService />
         </Container>
     );
 };
