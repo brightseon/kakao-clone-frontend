@@ -28,7 +28,7 @@ const LoginForm = styled.div`
 
 const Input = styled.input`
     border: none;
-    border-bottom: 1px solid #3F4045;
+    border-bottom: 1px solid ${ props => props.theme.authDarkGrey };
     background-color: transparent;
     color: ${ props => props.theme.whiteText };
     font-size: 12px;
@@ -43,11 +43,11 @@ const Input = styled.input`
 const Error = styled.span`
     height: 10px;
     font-size: 11px;
-    color: #E65F3F;
+    color: ${ props => props.theme.redColor };
 `;
 
 const LoginButton = styled.button<{ active : boolean }>`
-    background-color: ${ props => props.theme.black };
+    background-color: ${ props => props.theme.blackColor };
     padding: 16px 122px;
     font-size: 12px;
     border: none;

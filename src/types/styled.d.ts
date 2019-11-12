@@ -5,6 +5,8 @@ declare module 'styled-components' {
         bgColor : string;
         darkText : string;
         whiteText : string;
-        black : string;
+        authDarkGrey : string;
+        blackColor : string;
+        redColor : string;
     }
 }
