@@ -1,8 +1,13 @@
-import React, { useState, KeyboardEventHandler, KeyboardEvent } from 'react';
+import React, { useState, KeyboardEventHandler, KeyboardEvent, SFC } from 'react';
 import styled from 'styled-components';
 import useInput from '../Hooks/useInput';
 import axios from 'axios';
 import { URL } from '../constants';
+import { RouterProps } from 'react-router';
+
+interface IProps {
+    history : History;
+}
 
 const Container = styled.div`
     width: 100%;
@@ -63,7 +68,7 @@ const JoinButton = styled.button<{ active : boolean }>`
     user-select: none;
 `;
 
-const Join = () => {
+const Join : SFC<IProps> = ({ history }) => {
     const email = useInput('');
     const name = useInput('');
     const password = useInput('');
@@ -108,6 +113,16 @@ const Join = () => {
         }
 
         try {
+            const checkResult = await axios.post(`${ URL }/auth/duplicateCheck`, {
+                email : email.value
+            });
+
+            console.log('checkResult : ', checkResult);
+
+            if(checkResult) {
+
+            }
+
             const result = await axios.post(`${ URL }/auth/join`, {
                 email : email.value,
                 name : name.value,
@@ -116,11 +131,13 @@ const Join = () => {
             });
     
             console.log('result : ', result);
+
+            history.pushState(null, null, '/');
         } catch(err) {
             console.log('join error : ', err);
         }
     };
-
+    console.log(history)
     return (
         <Container>
             <JoinForm>
