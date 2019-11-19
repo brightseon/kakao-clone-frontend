@@ -3,11 +3,9 @@ import styled from 'styled-components';
 import useInput from '../Hooks/useInput';
 import axios from 'axios';
 import { URL } from '../constants';
-import { RouterProps } from 'react-router';
+import { RouteComponentProps } from 'react-router';
 
-interface IProps {
-    history : History;
-}
+interface IProps extends RouteComponentProps {};
 
 const Container = styled.div`
     width: 100%;
@@ -24,16 +22,6 @@ const JoinForm = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-`;
-
-const InputBox = styled.div`
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 10px;
-
-    &:last-child {
-        margin-bottom: 0;
-    }
 `;
 
 const Input = styled.input`
@@ -132,12 +120,12 @@ const Join : SFC<IProps> = ({ history }) => {
     
             console.log('result : ', result);
 
-            history.pushState(null, null, '/');
+            history.push('/');
         } catch(err) {
             console.log('join error : ', err);
         }
     };
-    console.log(history)
+
     return (
         <Container>
             <JoinForm>
