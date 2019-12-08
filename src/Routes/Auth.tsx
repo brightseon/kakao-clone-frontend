@@ -60,7 +60,7 @@ const LoginButton = styled.button<{ active : boolean }>`
 
 const Auth : SFC<IProps> = ({ toggleLoggedIn }) => {
     const [error, setError] = useState('');
-    const email = useInput(''); 
+    const email = useInput(localStorage.getItem('user_id') ? localStorage.getItem('user_id') : ''); 
     const password = useInput('');
     
     const isAcitve = () : boolean => {
@@ -92,6 +92,7 @@ const Auth : SFC<IProps> = ({ toggleLoggedIn }) => {
             
             console.log('data : ', data);
 
+            localStorage.setItem('user_id', email.value);
             toggleLoggedIn(true);
         } catch(err) {
             console.log('login error : ', err);
