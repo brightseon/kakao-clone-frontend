@@ -1,4 +1,5 @@
 import React from 'react';
+import useInput from '../Hooks/useInput';
 import Header from '../Components/Header';
 import ImgButton from '../Components/ImgButton';
 import AddUser from '../../images/add_user.svg';
@@ -27,6 +28,7 @@ const SearchBarWrapper = styled.div`
 `;
 
 const Friends = () => {
+    const { value, onChange } = useInput('');
 
     return (
         <Container>
@@ -36,7 +38,7 @@ const Friends = () => {
                 </BtnWrapper>
             </Header>
             <SearchBarWrapper>
-                <SearchBar placeholder={ '이름 검색' } name={ 'name' } value={ '' } setValue={ () => {} } />
+                <SearchBar placeholder={ '이름 검색' } name={ 'name' } value={ value } setValue={ onChange } />
             </SearchBarWrapper>
         </Container>
     );

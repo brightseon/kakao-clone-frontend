@@ -21,6 +21,8 @@ const Icon = styled.img`
 `;
 
 const Search = styled.input`
+    width: inherit;
+    height: inherit;
     border: none;
     background-color: transparent;
     outline: none;
@@ -35,7 +37,7 @@ const Search = styled.input`
 const SearchBar : SFC<IProps> = ({ placeholder, name, value, setValue }) => (
     <Container>
         <Icon src={ SearchIcon } />
-        <Search name={ name } value={ value } onChange={ setValue } placeholder={ placeholder } />
+        <Search name={ name } value={ value } onChange={ setValue } placeholder={ placeholder } autoComplete={ 'off' } />
     </Container>
 );
 
