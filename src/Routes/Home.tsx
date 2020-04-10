@@ -14,11 +14,17 @@ const Container = styled.div`
     display: flex;
 `;
 
+const Wrapper = styled.div`
+    flex: 1;
+`;
+
 const Home = () => (
     <Container>
         <SideBar />
-        <Route path={ home } exact component={ Friends } />
-        <Route path={ chats } exact component={ Chats } />
+        <Wrapper>
+            <Route path={ home } exact component={ Friends } />
+            <Route path={ chats } exact component={ Chats } />
+        </Wrapper>
     </Container>
 );
 
