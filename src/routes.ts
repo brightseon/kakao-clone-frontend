@@ -5,7 +5,7 @@ const JOIN ='/join';
 
 
 // Logged In Router
-const CHAT_LIST = '/chatList';
+const CHATS = '/chats';
 const CHAT = '/chat/:id';
 const MORE = '/more';
 
@@ -16,7 +16,7 @@ export const LOGGED_OUT_ROUTER = {
 
 export const LOGGED_IN_ROUTER = {
     home : HOME,
-    chatList : CHAT_LIST,
+    chats : CHATS,
     chat : CHAT,
     more : MORE
 };
