@@ -4,11 +4,14 @@ import Header from '../Components/Header';
 import ImgButton from '../Components/ImgButton';
 import AddUser from '../../images/add_user.svg';
 import SearchBar from '../Components/SearchBar';
+import FriendList from '../Components/FriendList';
 import styled from 'styled-components';
 
 const Container = styled.div`
     height: 100%;
-    padding: 50px 25px;
+    padding: 50px 0;
+    display: flex;
+    flex-direction: column;
 `;
 
 const BtnWrapper = styled.div`
@@ -18,8 +21,7 @@ const BtnWrapper = styled.div`
 `;
 
 const SearchBarWrapper = styled.div`
-    width: 100%;
-    margin-top: 33px;
+    margin: 33px 25px 0 25px;
     padding: 10px 12px;
     display: flex;
     align-items: center;
@@ -40,6 +42,7 @@ const Friends = () => {
             <SearchBarWrapper>
                 <SearchBar placeholder={ '이름 검색' } name={ 'name' } value={ value } setValue={ onChange } />
             </SearchBarWrapper>
+            <FriendList />
         </Container>
     );
 };

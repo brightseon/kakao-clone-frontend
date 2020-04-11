@@ -6,6 +6,7 @@ interface IProps {
 };
 
 const Container = styled.div`
+    padding: 0 25px;
     display: flex;
     align-items: center;
 `;
