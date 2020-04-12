@@ -1,5 +1,6 @@
 import React from 'react';
 import Friend from './Friend';
+import Accodian from './Accodian';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -8,14 +9,14 @@ const Container = styled.div`
     overflow-y: auto;
 `;
 
-const FriendList = () => {
+const FriendInfo = () => {
 
     return (
         <Container>
             <Friend friendName={ '나' } me={ true } />
-            <Friend friendName={ '너' } />
+            <Accodian name={ '즐겨찾기' } />
         </Container>
     );
 };
 
-export default FriendList;
+export default FriendInfo;

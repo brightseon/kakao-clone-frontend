@@ -4,7 +4,7 @@ import Header from '../Components/Header';
 import ImgButton from '../Components/ImgButton';
 import AddUser from '../../images/add_user.svg';
 import SearchBar from '../Components/SearchBar';
-import FriendList from '../Components/FriendList';
+import FriendInfo from '../Components/FriendInfo';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -42,7 +42,7 @@ const Friends = () => {
             <SearchBarWrapper>
                 <SearchBar placeholder={ '이름 검색' } name={ 'name' } value={ value } setValue={ onChange } />
             </SearchBarWrapper>
-            <FriendList />
+            <FriendInfo />
         </Container>
     );
 };
