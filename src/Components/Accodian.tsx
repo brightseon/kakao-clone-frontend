@@ -1,4 +1,4 @@
-import React, { SFC } from 'react';
+import React, { SFC, useState } from 'react';
 import ImgButton from './ImgButton';
 import AccodianArrow from '../../images/accodian_arrow.svg';
 import FriendItems from './FriendItems';
@@ -30,15 +30,27 @@ const Name = styled.span`
     color: #8C8F94;
 `;
 
-const Accodian : SFC<IProps> = ({ name }) => (
-    <Container>
-        <Line />
-        <Title>
-            <Name>{ name }</Name>
-            <ImgButton content={ AccodianArrow } />
-        </Title>
-        <FriendItems />
-    </Container>
-);
+const ExtendImgButton = styled(ImgButton)<{ open : boolean; }>`
+    transform: rotate(${ props => props.open ? 180 : 0 }deg);
+`;
+
+const Accodian : SFC<IProps> = ({ name }) => {
+    const [open, toggleOpen] = useState(false);
+
+    const toggleAccodian = () => {
+        toggleOpen(!open);
+    };
+
+    return (
+        <Container>
+            <Line />
+            <Title>
+                <Name>{ name }</Name>
+                <ExtendImgButton content={ AccodianArrow } btnClick={ toggleAccodian } open={ open } />
+            </Title>
+            { open && <FriendItems /> }
+        </Container>
+    );
+};
 
 export default Accodian;

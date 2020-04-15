@@ -15,6 +15,7 @@ const FriendInfo = () => {
         <Container>
             <Friend friendName={ '나' } me={ true } />
             <Accodian name={ '즐겨찾기' } />
+            <Accodian name={ '친구' } />
         </Container>
     );
 };
